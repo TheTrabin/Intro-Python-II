@@ -1,6 +1,6 @@
 from room import Room
 from player import Player
-
+from items.item import Item
 # Declare all the rooms
 
 room = {
@@ -55,6 +55,8 @@ directions = ['n','e','w','s']
 
 player = Player("Trabin", room['outside'])
 
+current_room = player.current_room
+
 print(f"q to quit, use n,e,w,s for directions")
 
 while True:
@@ -84,6 +86,16 @@ while True:
             player.current_room = player.current_room.s_to
         else:
             print("This isn't an exit. Please input again")
+    
+    if user_input == 'get' or user_input == 'take':
+        if len(current_room.items) > 0:
+            for i in current_room.items:
+                if user_input[i] == i.name:
+                    player.bag.append(i)
+                    print(f"{i.name} Collected. It has been safely placed in your bag!")
+                else:
+                    print('This item appears to be vacant. Search again, or check your bag.')
+
     if user_input == 'q':
         print(f"Thanks for playing, (player.name)!")
         exit(0)
