@@ -52,7 +52,7 @@ room['treasure'].s_to = room['narrow']
 # If the user enters "q", quit the game.
 
 directions = ['n','e','w','s']
-
+starting_room = room['outside']
 player = Player("Trabin", room['outside'])
 
 current_room = player.current_room
@@ -64,7 +64,7 @@ while True:
     print(player.current_room.name)
     print(player.current_room.description)
 
-    user_input = input(f"(player.name) What would you like to do? ")
+    user_input = input(f"{player.name} What would you like to do? ")
 
     if user_input == 'n':
         if player.current_room.n_to:
@@ -97,5 +97,5 @@ while True:
                     print('This item appears to be vacant. Search again, or check your bag.')
 
     if user_input == 'q':
-        print(f"Thanks for playing, (player.name)!")
+        print(f"Thanks for playing, {player.name}!")
         exit(0)
