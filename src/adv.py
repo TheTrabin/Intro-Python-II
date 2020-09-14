@@ -1,10 +1,11 @@
 from room import Room
-
+from player import Player
+from items.item import Item
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     """North of you, the cave mount beckons"""),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -49,3 +50,52 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+directions = ['n','e','w','s']
+starting_room = room['outside']
+player = Player("Trabin", room['outside'])
+
+current_room = player.current_room
+
+print(f"q to quit, use n,e,w,s for directions")
+
+while True:
+
+    print(player.current_room.name)
+    print(player.current_room.description)
+
+    user_input = input(f"{player.name} What would you like to do? ")
+
+    if user_input == 'n':
+        if player.current_room.n_to:
+            player.current_room = player.current_room.n_to
+        else:
+            print("This isn't an exit. Please input again")
+    if user_input == 'e':
+        if player.current_room.e_to:
+            player.current_room = player.current_room.e_to
+        else:
+            print("This isn't an exit. Please input again")
+    if user_input == 'w':
+        if player.current_room.w_to:
+            player.current_room = player.current_room.w_to
+        else:
+            print("This isn't an exit. Please input again")
+    if user_input == 's':
+        if player.current_room.s_to:
+            player.current_room = player.current_room.s_to
+        else:
+            print("This isn't an exit. Please input again")
+    
+    if user_input == 'get' or user_input == 'take':
+        if len(current_room.items) > 0:
+            for i in current_room.items:
+                if user_input[i] == i.name:
+                    player.bag.append(i)
+                    print(f"{i.name} Collected. It has been safely placed in your bag!")
+                else:
+                    print('This item appears to be vacant. Search again, or check your bag.')
+
+    if user_input == 'q':
+        print(f"Thanks for playing, {player.name}!")
+        exit(0)
